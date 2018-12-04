@@ -11,8 +11,8 @@ if (!argv.match(/^[0-9]{1,2}-[a-b]$/)) {
 try {
 
     const [ day, part ] = argv.split('-');
-    const input = fs.readFileSync(path.join(__dirname, `./src/day${day}/input-${part}.txt`));
-    const puzzle = require(`./src/day${day}/${part}.ts`);
+    const input = fs.readFileSync(path.join(__dirname, `./day${day}/input-${part}.txt`));
+    const puzzle = require(`./day${day}/${part}.ts`);
 
     const startTime = Date.now();
     const solution = puzzle.default(input.toString());
