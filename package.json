@@ -1,0 +1,21 @@
+{
+  "name": "aoc2018",
+  "version": "1.0.0",
+  "description": "https://adventofcode.com/2018/leaderboard/private/view/381993?order=stars",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "day": "ts-node ./run.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "fs": "0.0.1-security",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.12"
+  }
+}
