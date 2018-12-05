@@ -2,6 +2,7 @@
 type Fabric = number[][];
 
 interface Claim {
+    id: number;
     x: number;
     y: number;
     w: number;
@@ -16,24 +17,25 @@ const generateFabric = (w: number, h: number): Fabric => {
 
 };
 
-const processClaim = (fabric: Fabric, claim: Claim): Fabric => {
+const processClaim = (fabric: Fabric, claim: Claim): boolean => {
+
+    let didOverlap = false;
 
     for (let x = claim.x; x < claim.x + claim.w; x++) {
         for (let y = claim.y; y < claim.y + claim.h; y++) {
+
+            if (fabric[y][x] > 1) {
+
+                didOverlap = true;
+
+            }
 
             fabric[y][x] += 1;
 
         }
     }
 
-    return fabric;
-
-};
-
-const countOverlap = (fabric: Fabric): number => {
-
-    return fabric.reduce((acc, y) =>
-        y.reduce((acc, x) => x > 1 ? acc += 1 : acc, acc), 0);
+    return didOverlap;
 
 };
 
@@ -74,7 +76,6 @@ const placeClaims = (fabric: Fabric, line: string) => {
 
 };
 
-
 export default (input: string) => {
 
     const fabric = generateFabric(1000, 1000);
@@ -83,8 +84,12 @@ export default (input: string) => {
 
     claims.map((line) => placeClaims(fabric, line));
 
+    const nonOverlappingIds = claims
+        .map((line) => placeClaims(fabric, line))
+        .filter((id) => id);
+
     // console.log(visualizeFabric(fabric));
 
-    return countOverlap(fabric);
+    return nonOverlappingIds[0];
 
 };
