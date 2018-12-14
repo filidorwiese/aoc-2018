@@ -1,12 +1,11 @@
 
+const alphaBet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
 const react = (polymer: string): string => {
 
-    const alphaBet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    const regEx = new RegExp(alphaBet.map((l: string) => `${l}${l.toUpperCase()}|${l.toUpperCase()}${l}`).join('|'));
 
-    const regEx1 = new RegExp(alphaBet.map((l: string) => `${l}${l.toUpperCase()}`).join('|'));
-    const regEx2 = new RegExp(alphaBet.map((l: string) => `${l.toUpperCase()}${l}`).join('|'));
-
-    return polymer.replace(regEx1, '').replace(regEx2, '');
+    return polymer.replace(regEx, '');
 
 };
 
@@ -23,8 +22,19 @@ const fullyReact = (polymer: string): string => {
 
 };
 
-export default (input: string) => {
+export default (input: string, part: string) => {
 
-    return fullyReact(input).length;
+    if (part === 'a') {
+
+        return fullyReact(input).length;
+
+    } else {
+
+        return alphaBet.reduce((acc: number, l: string): number => {
+            const p = fullyReact(input.replace(new RegExp(l, 'gi'), ''))
+            return !acc || p.length < acc ? p.length : acc;
+        }, 0);
+
+    }
 
 };

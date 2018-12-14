@@ -14,12 +14,13 @@ try {
     const input = fs.readFileSync(path.join(__dirname, `./day${day}/input-${part}.txt`));
     const puzzle = require(`./day${day}/${part}.ts`);
 
+    console.log(chalk.yellow(`Advent of Code 2018 - https://adventofcode.com/2018/day/${day}\n`));
+    console.log(chalk.green(`Puzzle: ${chalk.bold(argv)}`));
+
     const startTime = Date.now();
     const solution = puzzle.default(input.toString(), part);
     const duration = `${Date.now() - startTime}ms`;
 
-    console.log(chalk.yellow(`Advent of Code 2018 - https://adventofcode.com/2018/day/${day}\n`));
-    console.log(chalk.green(`Puzzle: ${chalk.bold(argv)}`));
     console.log(chalk.green(`Answer: ${chalk.bold(solution)}`));
     console.log(chalk.green(`Time took: ${chalk.bold(duration)}\n`));
 
