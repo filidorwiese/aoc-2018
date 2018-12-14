@@ -15,7 +15,7 @@ try {
     const puzzle = require(`./day${day}/${part}.ts`);
 
     const startTime = Date.now();
-    const solution = puzzle.default(input.toString());
+    const solution = puzzle.default(input.toString(), part);
     const duration = `${Date.now() - startTime}ms`;
 
     console.log(chalk.yellow(`Advent of Code 2018 - https://adventofcode.com/2018/day/${day}\n`));

@@ -97,6 +97,7 @@ const watchGuards = (events: GuardEvent[]): Guard[] => {
                 acc[v]++;
                 return acc
             }, guard.sleepyMinutes);
+
         }
 
         return [...acc, guard];
@@ -105,32 +106,39 @@ const watchGuards = (events: GuardEvent[]): Guard[] => {
 
 };
 
-const getSleepiestGuard = (guards: Guard[]): Guard => {
+const getSleepiestGuardStrategy1 = (guards: Guard[]): Guard => {
 
     return guards.reduce((acc, guard) => !acc || guard.napTime > acc.napTime ? guard : acc);
 
 };
 
-const getSleepiestMinutes = (guard: Guard): number => {
+const getSleepiestGuardStrategy2 = (guards: Guard[]): Guard => {
+
+    return guards
+        .reduce((acc, guard) => !acc || getSleepiestMinutes(guard)[1] > getSleepiestMinutes(acc)[1] ? guard : acc);
+
+};
+
+const getSleepiestMinutes = (guard: Guard): [number, number] => {
 
     const sorted = Object.entries(guard.sleepyMinutes)
         .sort((a, b) => a[1] > b[1] ? -1 : 1);
 
-    return +sorted[0][0];
+    return [ +sorted[0][0], sorted[0][1] ];
 
 };
 
-export default (input: string) => {
+export default (input: string, part: string) => {
 
     const events = normalize(input.split('\n'));
 
     const guards = watchGuards(events);
 
-    const sleepiestGuard = getSleepiestGuard(guards);
+    const sleepiestGuard = part === 'a' ? getSleepiestGuardStrategy1(guards) : getSleepiestGuardStrategy2(guards);
 
     const sleepiestMinute = getSleepiestMinutes(sleepiestGuard);
 
-    const solution = sleepiestGuard.id * sleepiestMinute;
+    const solution = sleepiestGuard.id * sleepiestMinute[0];
 
     return solution;
 
